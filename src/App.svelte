@@ -5,17 +5,20 @@
   // console.log(tree)
   // tree.name='.'
   let tree, url;
-  let github_repo, branch_name;
+  let github_repo, branch_name, prefix;
 
   console.log('query string', window.location.search)
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('url')) {
     url = urlParams.get('url')
     console.log('got url from params', url);
+    prefix = url.split('web/output.json')[0]
   } else {
     url = 'https://raw.githubusercontent.com/saewoonam/random-data/main/file_tree.json'
     github_repo = 'saewoonam/sc-current-source-hw'
     branch_name = 'main'
+    prefix = "https://raw.githubusercontent.com/"+github_repo;
+    prefix += "/"+branch_name+"/"
   }
   // console.log('encode', encodeURIComponent(url))
   // https%3A%2F%2Fraw.githubusercontent.com%2Fsaewoonam%2Frandom-data%2Fmain%2Ffile_tree.json
@@ -31,8 +34,6 @@
   $: {
       if ($render_list.length > 0) {
         console.log($render_list)
-        let prefix = "https://raw.githubusercontent.com/"+github_repo;
-        prefix += "/"+branch_name+"/"
         // build src for iframe
         let kicad_list = encodeURIComponent($render_list.map(a => prefix+a.path).join('\n'))
         let src_url = "https://saewoonam.github.io/kicad-utils/viewer.html?url="+kicad_list;

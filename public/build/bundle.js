@@ -1200,7 +1200,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$2 = "src/App.svelte";
 
-    // (47:0) {#if tree}
+    // (48:0) {#if tree}
     function create_if_block$1(ctx) {
     	let folder;
     	let t0;
@@ -1225,7 +1225,7 @@ var app = (function () {
     			p = element("p");
     			t1 = text("render_list: ");
     			t2 = text(t2_value);
-    			add_location(p, file$2, 48, 0, 1676);
+    			add_location(p, file$2, 49, 0, 1717);
     		},
     		m: function mount(target, anchor) {
     			mount_component(folder, target, anchor);
@@ -1263,7 +1263,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(47:0) {#if tree}",
+    		source: "(48:0) {#if tree}",
     		ctx
     	});
 
@@ -1345,17 +1345,20 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("App", slots, []);
     	let tree, url;
-    	let github_repo, branch_name;
+    	let github_repo, branch_name, prefix;
     	console.log("query string", window.location.search);
     	var urlParams = new URLSearchParams(window.location.search);
 
     	if (urlParams.has("url")) {
     		url = urlParams.get("url");
     		console.log("got url from params", url);
+    		prefix = url.split("web/output.json")[0];
     	} else {
     		url = "https://raw.githubusercontent.com/saewoonam/random-data/main/file_tree.json";
     		github_repo = "saewoonam/sc-current-source-hw";
     		branch_name = "main";
+    		prefix = "https://raw.githubusercontent.com/" + github_repo;
+    		prefix += "/" + branch_name + "/";
     	}
 
     	// console.log('encode', encodeURIComponent(url))
@@ -1382,6 +1385,7 @@ var app = (function () {
     		url,
     		github_repo,
     		branch_name,
+    		prefix,
     		urlParams,
     		load_data,
     		$render_list
@@ -1390,8 +1394,9 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ("tree" in $$props) $$invalidate(1, tree = $$props.tree);
     		if ("url" in $$props) url = $$props.url;
-    		if ("github_repo" in $$props) $$invalidate(2, github_repo = $$props.github_repo);
-    		if ("branch_name" in $$props) $$invalidate(3, branch_name = $$props.branch_name);
+    		if ("github_repo" in $$props) github_repo = $$props.github_repo;
+    		if ("branch_name" in $$props) branch_name = $$props.branch_name;
+    		if ("prefix" in $$props) $$invalidate(2, prefix = $$props.prefix);
     		if ("urlParams" in $$props) urlParams = $$props.urlParams;
     	};
 
@@ -1400,12 +1405,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*$render_list, github_repo, branch_name*/ 13) {
+    		if ($$self.$$.dirty & /*$render_list, prefix*/ 5) {
     			{
     				if ($render_list.length > 0) {
     					console.log($render_list);
-    					let prefix = "https://raw.githubusercontent.com/" + github_repo;
-    					prefix += "/" + branch_name + "/";
 
     					// build src for iframe
     					let kicad_list = encodeURIComponent($render_list.map(a => prefix + a.path).join("\n"));
@@ -1421,7 +1424,7 @@ var app = (function () {
     		}
     	};
 
-    	return [$render_list, tree, github_repo, branch_name];
+    	return [$render_list, tree, prefix];
     }
 
     class App extends SvelteComponentDev {
