@@ -1,5 +1,5 @@
 
-(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35730/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 var app = (function () {
     'use strict';
 
@@ -1200,7 +1200,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$2 = "src/App.svelte";
 
-    // (46:0) {#if tree}
+    // (47:0) {#if tree}
     function create_if_block$1(ctx) {
     	let folder;
     	let t0;
@@ -1225,7 +1225,7 @@ var app = (function () {
     			p = element("p");
     			t1 = text("render_list: ");
     			t2 = text(t2_value);
-    			add_location(p, file$2, 47, 0, 1660);
+    			add_location(p, file$2, 48, 0, 1676);
     		},
     		m: function mount(target, anchor) {
     			mount_component(folder, target, anchor);
@@ -1263,7 +1263,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(46:0) {#if tree}",
+    		source: "(47:0) {#if tree}",
     		ctx
     	});
 
@@ -1345,6 +1345,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("App", slots, []);
     	let tree, url;
+    	let github_repo, branch_name;
     	console.log("query string", window.location.search);
     	var urlParams = new URLSearchParams(window.location.search);
 
@@ -1353,6 +1354,8 @@ var app = (function () {
     		console.log("got url from params", url);
     	} else {
     		url = "https://raw.githubusercontent.com/saewoonam/random-data/main/file_tree.json";
+    		github_repo = "saewoonam/sc-current-source-hw";
+    		branch_name = "main";
     	}
 
     	// console.log('encode', encodeURIComponent(url))
@@ -1377,6 +1380,8 @@ var app = (function () {
     		render_list,
     		tree,
     		url,
+    		github_repo,
+    		branch_name,
     		urlParams,
     		load_data,
     		$render_list
@@ -1385,6 +1390,8 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ("tree" in $$props) $$invalidate(1, tree = $$props.tree);
     		if ("url" in $$props) url = $$props.url;
+    		if ("github_repo" in $$props) $$invalidate(2, github_repo = $$props.github_repo);
+    		if ("branch_name" in $$props) $$invalidate(3, branch_name = $$props.branch_name);
     		if ("urlParams" in $$props) urlParams = $$props.urlParams;
     	};
 
@@ -1393,12 +1400,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*$render_list*/ 1) {
+    		if ($$self.$$.dirty & /*$render_list, github_repo, branch_name*/ 13) {
     			{
     				if ($render_list.length > 0) {
     					console.log($render_list);
-    					let github_repo = "saewoonam/sc-current-source-hw";
-    					let branch_name = "main";
     					let prefix = "https://raw.githubusercontent.com/" + github_repo;
     					prefix += "/" + branch_name + "/";
 
@@ -1416,7 +1421,7 @@ var app = (function () {
     		}
     	};
 
-    	return [$render_list, tree];
+    	return [$render_list, tree, github_repo, branch_name];
     }
 
     class App extends SvelteComponentDev {

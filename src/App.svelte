@@ -5,6 +5,7 @@
   // console.log(tree)
   // tree.name='.'
   let tree, url;
+  let github_repo, branch_name;
 
   console.log('query string', window.location.search)
   var urlParams = new URLSearchParams(window.location.search);
@@ -13,6 +14,8 @@
     console.log('got url from params', url);
   } else {
     url = 'https://raw.githubusercontent.com/saewoonam/random-data/main/file_tree.json'
+    github_repo = 'saewoonam/sc-current-source-hw'
+    branch_name = 'main'
   }
   // console.log('encode', encodeURIComponent(url))
   // https%3A%2F%2Fraw.githubusercontent.com%2Fsaewoonam%2Frandom-data%2Fmain%2Ffile_tree.json
@@ -28,8 +31,6 @@
   $: {
       if ($render_list.length > 0) {
         console.log($render_list)
-        let github_repo = 'saewoonam/sc-current-source-hw'
-        let branch_name = 'main'
         let prefix = "https://raw.githubusercontent.com/"+github_repo;
         prefix += "/"+branch_name+"/"
         // build src for iframe
